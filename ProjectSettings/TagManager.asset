@@ -4,16 +4,17 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Ground
+  - Platform
+  - Fighter
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - 
   - Water
   - UI
-  - 
-  - 
+  - Tile
+  - Sphere
   - 
   - 
   - 
