@@ -2348,7 +2348,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 9875a245ac49007498213638a307faa1, type: 2}
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 4477118095434525466, guid: 87b1505596502c24da558df7d1207238,
         type: 3}
       propertyPath: m_RootOrder
@@ -2423,6 +2423,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Center.y
       value: -0.007969797
+      objectReference: {fileID: 0}
+    - target: {fileID: 5416468765069276950, guid: 87b1505596502c24da558df7d1207238,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87b1505596502c24da558df7d1207238, type: 3}

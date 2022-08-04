@@ -19,20 +19,27 @@ public class CubePlacement : MonoBehaviour
 
     void Update()
     {
-        MousePosition = Input.mousePosition;
-        Ray ray = Camera.main.ScreenPointToRay(MousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, Mask))
+        if (Input.GetMouseButton(0))
         {
-            int PosX = (int)Mathf.Round(hit.point.x);
-            int PosZ = (int)Mathf.Round(hit.point.z);
+            MousePosition = Input.mousePosition;
+            Ray ray = Camera.main.ScreenPointToRay(MousePosition);
+            RaycastHit hit;
 
-            ObjectToMove.transform.position = new Vector3(PosX, LastPositionY, PosZ);
-            Render.material = GridMaterial;
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, Mask))
+            {
+                int PosX = (int)Mathf.Round(hit.point.x);
+                int PosZ = (int)Mathf.Round(hit.point.z);
+                if (hit.transform.name == gameObject.name)
+                {
+                    ObjectToMove.transform.position = new Vector3(PosX, LastPositionY, PosZ);
+                    Render.material = GridMaterial;
+                }
+                
+            }
         }
+        
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonUp(0))
         {
             Instantiate(ObjectToPlace, ObjectToMove.transform.position, Quaternion.identity);
             Destroy(gameObject);
