@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 3301491498718350582}
   - component: {fileID: 6012465814250802691}
   - component: {fileID: 6766633322444258705}
-  - component: {fileID: -4780451750926687412}
   m_Layer: 0
-  m_Name: Player2
+  m_Name: Hero_v2_toMove
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2232370786445969920}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.473, y: 0.5, z: -4.49}
+  m_LocalPosition: {x: -1.6895189, y: 0.5, z: -2.26097}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -63,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 8208fb2b790a75647b23aa22698f360d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,20 +97,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-4780451750926687412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2232370786445969920}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ba21ce1aeb65a84393798cff4faff36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObjectToPlace: {fileID: 2232370786445969920}
-  LastPositionY: 0.5
-  MousePosition: {x: 0, y: 0, z: 0}
-  GridMaterial: {fileID: 2100000, guid: 1e942e31f3f3e3443b21382b7abcce79, type: 2}
-  DefaultMaterial: {fileID: 2100000, guid: acf696fcfc7d7a14da2b66aa4cbdb6a6, type: 2}

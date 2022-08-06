@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Platform
   - Fighter
+  - Hero_v1
+  - Hero_v2
   layers:
   - Default
   - TransparentFX

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6012465814250802691}
   - component: {fileID: 6766633322444258705}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Hero_v1_toMove
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
