@@ -8,6 +8,8 @@ TagManager:
   - Fighter
   - Hero_v1
   - Hero_v2
+  - Wizard_v1
+  - Wizard_v2
   layers:
   - Default
   - TransparentFX

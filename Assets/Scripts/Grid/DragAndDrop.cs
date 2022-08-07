@@ -98,10 +98,20 @@ public class DragAndDrop : MonoBehaviour
     {
         if (other.gameObject.tag == gameObject.tag && _checkMerge)
         {
-        
-            Destroy(other.gameObject);
-            GameObject.Instantiate(Resources.Load("Prefabs/Hero_v2"), transform.position, Quaternion.identity);
-            Destroy(gameObject);
+            if (gameObject.tag == "Wizard_v1")
+            {
+                Destroy(other.gameObject);
+
+                GameObject.Instantiate(Resources.Load("Prefabs/Wizard_v2"), transform.position, Quaternion.identity);
+                Destroy(gameObject);
+            }
+            if (gameObject.tag == "Hero_v1")
+            {
+                Destroy(other.gameObject);
+
+                GameObject.Instantiate(Resources.Load("Prefabs/Hero_v2"), transform.position, Quaternion.identity);
+                Destroy(gameObject);
+            }
 
         }
     }
