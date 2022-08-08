@@ -5,6 +5,5 @@ using UnityEngine;
 public class FighterAdvanced : ScriptableObject
 {
     public float _damage;
-    public float _health;
-    
+    public float _health;    
 }

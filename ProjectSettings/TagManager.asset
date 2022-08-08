@@ -12,6 +12,9 @@ TagManager:
   - Wizard_v2
   - Enemy
   - Hero
+  - Settings
+  - HeroCard
+  - Fight
   layers:
   - Default
   - TransparentFX
