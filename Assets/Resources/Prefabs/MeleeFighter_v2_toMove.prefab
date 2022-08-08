@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6012465814250802691}
   - component: {fileID: 6766633322444258705}
   m_Layer: 0
-  m_Name: Hero_v1_toMove
+  m_Name: MeleeFighter_v2_toMove
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 8208fb2b790a75647b23aa22698f360d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

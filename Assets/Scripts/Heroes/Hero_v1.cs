@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -38,3 +38,4 @@ public class Hero_v1 : Fighter
         _agent.SetDestination(findNearestEnemy().transform.position);
     }
 }
+*/

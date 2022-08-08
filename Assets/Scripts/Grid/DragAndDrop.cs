@@ -36,7 +36,7 @@ public class DragAndDrop : MonoBehaviour
             {
                 int PosX = (int)Mathf.Round(hit.point.x); //Grid hareketi vermek için koordinatları tam sayiya yuvarliyoruz
                 int PosZ = (int)Mathf.Round(hit.point.z);
-                if (hit.transform.name == gameObject.name) //Mouse un tiklandıgı obje bu scriptin atandigi obje ise,
+                if (hit.transform.GetInstanceID() == gameObject.transform.GetInstanceID()) //Mouse un tiklandıgı obje bu scriptin atandigi obje ise,
                 {
                     _isMe = true;
                     instance.SetActive(false);
@@ -96,22 +96,25 @@ public class DragAndDrop : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == gameObject.tag && _checkMerge)
+        Fighter.Type myType = gameObject.GetComponent<Fighter>().type;
+        if (other.gameObject.GetComponent<Fighter>()?.type == myType && _checkMerge)
         {
-            if (gameObject.tag == "Wizard_v1")
+            if (myType == Fighter.Type.Wizard_v1)
             {
-                Destroy(other.gameObject);
+                
 
                 GameObject.Instantiate(Resources.Load("Prefabs/Wizard_v2"), transform.position, Quaternion.identity);
-                Destroy(gameObject);
+               
             }
-            if (gameObject.tag == "Hero_v1")
+            else if (myType == Fighter.Type.MeleeFighter_v1)
             {
-                Destroy(other.gameObject);
-
-                GameObject.Instantiate(Resources.Load("Prefabs/Hero_v2"), transform.position, Quaternion.identity);
-                Destroy(gameObject);
+                
+           
+                GameObject.Instantiate(Resources.Load("Prefabs/MeleeFighter_v2"), transform.position, Quaternion.identity);
+                
             }
+            Destroy(other.gameObject);
+            Destroy(gameObject);
 
         }
     }
