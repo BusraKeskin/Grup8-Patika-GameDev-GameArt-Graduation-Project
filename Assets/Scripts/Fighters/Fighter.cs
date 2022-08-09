@@ -72,7 +72,7 @@ public class Fighter : MonoBehaviour
         {
             target = findNearestHero().transform.position;
         }
-        _agent.SetDestination(new Vector3(target.x, transform.position.y, target.z));
+        //_agent.SetDestination(new Vector3(target.x, transform.position.y, target.z));
     }
 
 }
