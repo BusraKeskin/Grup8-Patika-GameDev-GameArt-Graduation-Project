@@ -15,12 +15,14 @@ public class DragAndDrop : MonoBehaviour
     private bool _isMe;
     private bool _checkMerge;
    
+    private bool _onGrid;
      
     
     void Start()
     {
         Render = GameObject.Find("Grid").GetComponent<Renderer>(); //Grid zemin
-       
+        
+
     }
 
     void Update()
@@ -43,6 +45,8 @@ public class DragAndDrop : MonoBehaviour
                     //gameObject.GetComponent<Renderer>().material = unvisibleMat;
                    
                     objectTMInstance = GameObject.Instantiate(objectToMove, transform.position, Quaternion.identity);
+                    _onGrid = objectTMInstance.GetComponent<checkGrid>()._onGrid;
+                    
                 }
                 else
                 {
@@ -86,8 +90,12 @@ public class DragAndDrop : MonoBehaviour
                 int PosZ = (int)Mathf.Round(hit.point.z);
 
                 gridMark.SetActive(true);
-                transform.position = new Vector3(PosX, LastPositionY, PosZ); //Bu objeyi hareket ettir
-                objectTMInstance.transform.position = Vector3.MoveTowards(objectTMInstance.transform.position, new Vector3(hit.point.x, LastPositionY, hit.point.z), 30 * Time.deltaTime); //Suruklenen objeyi hareket ettir
+                if (_onGrid) {
+                    transform.position = new Vector3(PosX, LastPositionY, PosZ); //Bu objeyi hareket ettir
+                   
+                }
+                objectTMInstance.transform.position = Vector3.MoveTowards(objectTMInstance.transform.position, new Vector3(hit.point.x, LastPositionY, hit.point.z), 30 * Time.deltaTime);
+                //Suruklenen objeyi hareket ettir
                 //Vector3.MoveTowards(objectTMInstance.transform.position, new Vector3(hit.point.x, LastPositionY, hit.point.z),  * Time.deltaTime);
             }
             Render.material = GridMaterial; // Zemin materyalini grid materyale çevir
