@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ba21ce1aeb65a84393798cff4faff36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToMove: {fileID: 8171656304156219219, guid: 67818789785be3447bc29df1f779fcfb,
+  objectToMove: {fileID: 8171656304156219219, guid: d5d5c1894b079c240978b904d190422f,
     type: 3}
   objectTMInstance: {fileID: 0}
   gridMark: {fileID: 8171656304925002044}

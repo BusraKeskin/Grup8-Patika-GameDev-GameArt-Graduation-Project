@@ -27,79 +27,88 @@ public class DragAndDrop : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) //Mouse a tıklandiginda
+        if (!GameManager.Instance._isStart) 
         {
-
-            MousePosition = Input.mousePosition;
-            Ray ray = Camera.main.ScreenPointToRay(MousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity)) //Eger mouse un bulundugu yerde bir obje varsa
+            if (Input.GetMouseButtonDown(0)) //Mouse a tıklandiginda
             {
-                int PosX = (int)Mathf.Round(hit.point.x); //Grid hareketi vermek için koordinatları tam sayiya yuvarliyoruz
-                int PosZ = (int)Mathf.Round(hit.point.z);
-                if (hit.transform.GetInstanceID() == gameObject.transform.GetInstanceID()) //Mouse un tiklandıgı obje bu scriptin atandigi obje ise,
+
+                MousePosition = Input.mousePosition;
+                Ray ray = Camera.main.ScreenPointToRay(MousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity)) //Eger mouse un bulundugu yerde bir obje varsa
                 {
-                    _isMe = true;
-                    instance.SetActive(false);
-                    //gameObject.GetComponent<Renderer>().material = unvisibleMat;
-                   
-                    objectTMInstance = GameObject.Instantiate(objectToMove, transform.position, Quaternion.identity);
-                    _onGrid = objectTMInstance.GetComponent<checkGrid>()._onGrid;
-                    
+                    int PosX = (int)Mathf.Round(hit.point.x); //Grid hareketi vermek için koordinatları tam sayiya yuvarliyoruz
+                    int PosZ = (int)Mathf.Round(hit.point.z);
+                    if (hit.transform.GetInstanceID() == gameObject.transform.GetInstanceID()) //Mouse un tiklandıgı obje bu scriptin atandigi obje ise,
+                    {
+
+                        _isMe = true;
+                        instance.SetActive(false);
+                        //gameObject.GetComponent<Renderer>().material = unvisibleMat;
+
+                        objectTMInstance = GameObject.Instantiate(objectToMove, transform.position, Quaternion.identity);
+
+
+
+                    }
+                    else
+                    {
+                        _isMe = false;
+                    }
+
                 }
-                else
+
+            }
+            else if (Input.GetMouseButton(0)) //Mouse basılı durumdayken,
+            {
+                _isDraging = true;
+                _checkMerge = false;
+
+            }
+            else if (Input.GetMouseButtonUp(0))  //Elimi mousetan kaldirdigimda,
+            {
+                if (_isMe) //Az once tiklanan obje bensem
                 {
+                    _isDraging = false;
                     _isMe = false;
+                    _checkMerge = true;
+                    instance.SetActive(true);
+                    Render.material = DefaultMaterial;
+
+                    gridMark.SetActive(false);
+                    Destroy(objectTMInstance);
+
                 }
 
             }
-
-        }
-        else if (Input.GetMouseButton(0)) //Mouse basılı durumdayken,
-        { 
-            _isDraging = true;
-            _checkMerge = false;
-            
-        }
-        else if (Input.GetMouseButtonUp(0))  //Elimi mousetan kaldirdigimda,
-        { 
-            if(_isMe) //Az once tiklanan obje bensem
+            if (_isDraging && _isMe) //Eger surukleme durumundaysa ve suruklenen obje scriptin oldugu obje ise,
             {
-                _isDraging = false;
-                _isMe = false;
-                _checkMerge = true;
-                instance.SetActive(true);
-                Render.material = DefaultMaterial;
-                
-                gridMark.SetActive(false);
-                Destroy(objectTMInstance);
+                MousePosition = Input.mousePosition;
+                Ray ray = Camera.main.ScreenPointToRay(MousePosition);
+                RaycastHit hit;
 
-            }
-          
-        } 
-        if (_isDraging && _isMe) //Eger surukleme durumundaysa ve suruklenen obje scriptin oldugu obje ise,
-        {
-            MousePosition = Input.mousePosition;
-            Ray ray = Camera.main.ScreenPointToRay(MousePosition);
-            RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+                {
+                    int PosX = (int)Mathf.Round(hit.point.x);
+                    int PosZ = (int)Mathf.Round(hit.point.z);
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-            {
-                int PosX = (int)Mathf.Round(hit.point.x);
-                int PosZ = (int)Mathf.Round(hit.point.z);
+                    gridMark.SetActive(true);
+                    _onGrid = objectTMInstance.GetComponent<checkGrid>()._onGrid;
+                    //Debug.Log(_onGrid);
+                    if (_onGrid)
+                    {
+                        transform.position = new Vector3(PosX, LastPositionY, PosZ); //Bu objeyi hareket ettir
 
-                gridMark.SetActive(true);
-                if (_onGrid) {
-                    transform.position = new Vector3(PosX, LastPositionY, PosZ); //Bu objeyi hareket ettir
-                   
+                    }
+                    objectTMInstance.transform.position = Vector3.MoveTowards(objectTMInstance.transform.position, new Vector3(hit.point.x, LastPositionY, hit.point.z), 30 * Time.deltaTime);
+                    //Suruklenen objeyi hareket ettir
+                    //Vector3.MoveTowards(objectTMInstance.transform.position, new Vector3(hit.point.x, LastPositionY, hit.point.z),  * Time.deltaTime);
                 }
-                objectTMInstance.transform.position = Vector3.MoveTowards(objectTMInstance.transform.position, new Vector3(hit.point.x, LastPositionY, hit.point.z), 30 * Time.deltaTime);
-                //Suruklenen objeyi hareket ettir
-                //Vector3.MoveTowards(objectTMInstance.transform.position, new Vector3(hit.point.x, LastPositionY, hit.point.z),  * Time.deltaTime);
+                Render.material = GridMaterial; // Zemin materyalini grid materyale çevir
             }
-            Render.material = GridMaterial; // Zemin materyalini grid materyale çevir
-        }    
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)

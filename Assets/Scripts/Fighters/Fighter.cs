@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class Fighter : MonoBehaviour
 {
+    
     public float _damage;
     public float _health;
 
@@ -24,7 +25,11 @@ public class Fighter : MonoBehaviour
     private GameObject[] _enemies, _heroes;
 
     List<float> distances;
-
+    private void OnEnable()
+    {
+        GameManager.onModeChange -= detectModeChange;
+        GameManager.onModeChange += detectModeChange;
+    }
     void Start()
     {
         _enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -62,17 +67,32 @@ public class Fighter : MonoBehaviour
     }
     void Update()
     {
-        Vector3 target = Vector3.zero;
-        //_checkCol = transform.GetComponent<DragAndDrop>()._checkCol;
-        if (gameObject.tag == "Hero") 
-        { 
-            target = findNearestEnemy().transform.position;
+        if (GameManager.Instance._isStart) {
+            
+            Vector3 target = Vector3.zero;
+            //_checkCol = transform.GetComponent<DragAndDrop>()._checkCol;
+            if (gameObject.tag == "Hero")
+            {
+                target = findNearestEnemy().transform.position;
+            }
+            else
+            {
+                target = findNearestHero().transform.position;
+            }
+            _agent.SetDestination(new Vector3(target.x, transform.position.y, target.z));
+        }
+        
+    }
+
+    public void detectModeChange(bool mode)
+    {
+        if (mode == true)
+        {
+            gameObject.GetComponent<NavMeshAgent>().enabled = true;
         }
         else
         {
-            target = findNearestHero().transform.position;
+            gameObject.GetComponent<NavMeshAgent>().enabled = false;
         }
-        //_agent.SetDestination(new Vector3(target.x, transform.position.y, target.z));
     }
-
 }
