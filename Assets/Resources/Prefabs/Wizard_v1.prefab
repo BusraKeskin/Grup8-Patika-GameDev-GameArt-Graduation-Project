@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: 7769676521367136595}
   - component: {fileID: 7769676521367136588}
   - component: {fileID: 7769676521367136589}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wizard_v1
   m_TagString: Hero
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7769676521367136590}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.07999992, y: 0.032, z: -4.319}
+  m_LocalPosition: {x: 0.07999992, y: -0.4, z: -4.319}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -294,15 +294,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ba21ce1aeb65a84393798cff4faff36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToMove: {fileID: 7769676521367136590, guid: 250c72a2dbd87444d9950adc334f5384,
+  objectToMove: {fileID: 7769676521367136590, guid: 7fe2bfb10d623c24989a125f80c3fed6,
     type: 3}
   objectTMInstance: {fileID: 0}
   gridMark: {fileID: 7769676519999227838}
   instance: {fileID: 7769676520952159050}
-  LastPositionY: 0.6
+  LastPositionY: 0
   MousePosition: {x: 0, y: 0, z: 0}
   GridMaterial: {fileID: 2100000, guid: 1e942e31f3f3e3443b21382b7abcce79, type: 2}
   DefaultMaterial: {fileID: 2100000, guid: acf696fcfc7d7a14da2b66aa4cbdb6a6, type: 2}
+  DragAndDropValues: {fileID: 11400000, guid: ea4db0af68498274fad21a8a2054c702, type: 2}
 --- !u!54 &7769676521367136595
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -326,7 +327,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7769676521367136590}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5

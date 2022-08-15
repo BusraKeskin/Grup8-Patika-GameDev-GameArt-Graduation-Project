@@ -30,10 +30,14 @@ public class Fighter : MonoBehaviour
         GameManager.onModeChange -= detectModeChange;
         GameManager.onModeChange += detectModeChange;
     }
+
+    private void OnDestroy()
+    {
+        GameManager.onModeChange -= detectModeChange;
+    }
     void Start()
     {
         _enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        _heroes = GameObject.FindGameObjectsWithTag("Hero");
         _agent = GetComponent<NavMeshAgent>();
     }
 
@@ -67,8 +71,8 @@ public class Fighter : MonoBehaviour
     }
     void Update()
     {
-        if (GameManager.Instance._isStart) {
-            
+        if (GameManager.Instance._isStart)
+        {
             Vector3 target = Vector3.zero;
             //_checkCol = transform.GetComponent<DragAndDrop>()._checkCol;
             if (gameObject.tag == "Hero")
@@ -81,18 +85,18 @@ public class Fighter : MonoBehaviour
             }
             _agent.SetDestination(new Vector3(target.x, transform.position.y, target.z));
         }
-        
     }
 
     public void detectModeChange(bool mode)
     {
         if (mode == true)
         {
-            gameObject.GetComponent<NavMeshAgent>().enabled = true;
+            _heroes = GameObject.FindGameObjectsWithTag("Hero");
+            _agent.enabled = true;
         }
         else
         {
-            gameObject.GetComponent<NavMeshAgent>().enabled = false;
+            _agent.enabled = false;
         }
     }
 }
