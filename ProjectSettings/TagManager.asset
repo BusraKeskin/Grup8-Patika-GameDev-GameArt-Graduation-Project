@@ -15,11 +15,13 @@ TagManager:
   - Settings
   - HeroCard
   - Fight
+  - Grid
+  - GridLayout
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Grid
   - Water
   - UI
   - Tile
