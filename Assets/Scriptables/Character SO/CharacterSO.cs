@@ -8,7 +8,6 @@ public class CharacterSO : ScriptableObject
     public int MaxHealth;
     public int AttackSpeed;
     public int AttackDamage;
-    public int Test;
     public CharacterType characterType;
     public Type type;
 

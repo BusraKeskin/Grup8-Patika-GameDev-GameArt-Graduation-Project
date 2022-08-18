@@ -36,7 +36,7 @@ public class Fighter : MonoBehaviour
         meleeType = CharacterSO.CharacterType.Melee;
         wizardType = CharacterSO.CharacterType.Wizard;
         CurrentState = CharacterStates.Idle;
-        MovementSpeed = 0.5f;
+        MovementSpeed = 1f;
 
     }
 
@@ -45,7 +45,7 @@ public class Fighter : MonoBehaviour
         _heroes = GameObject.FindGameObjectsWithTag("Hero");
         _enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-        if(GameManager.Instance._isStart) 
+        if (GameManager.Instance._isStart)
         {
             switch (CurrentState)
             {
@@ -54,13 +54,13 @@ public class Fighter : MonoBehaviour
                     //Bir hedefe locklanmal? ve state'i locked olarak de?i?meli.
                     break;
                 case CharacterStates.Locked:
-                    StartCoroutine(LockedState());
-                    
+                    LockedState();
+
                     //Birim melee ya da wizard m? diye kontrol edilmeli. Wizard ise sald?rmal?. 
                     //Birim melee ise target ile aras?ndaki farka bakacak. 2f'ten küçükse sald?racak, büyükse ko?acak.
                     break;
                 case CharacterStates.Running:
-                    if(nearestTarget)
+                    if (nearestTarget)
                     {
                         RunningState();
                     }
@@ -77,22 +77,24 @@ public class Fighter : MonoBehaviour
                     break;
             }
 
+            UpdateHealth();
+
+            CheckIsBoardCleared();
+
+            if (IsBoardCleared)
+            {
+                GameManager.Instance._isStart = false;
+            }
+
             if (CurrentHealth <= 0f)
             {
                 Destroy(gameObject);
             }
-            if (_enemies.Length <= 0)
+
+            if (LockedTarget)
             {
-                IsBoardCleared = true;
-            }
-            else if(_heroes.Length <= 0)
-            {
-                IsBoardCleared = true;
-            }
-            if(IsBoardCleared)
-            {
-                GameManager.Instance._isStart = false;
-                //Time.timeScale = 0;
+                LookToTarget();
+                SetStatusByType();
             }
         }
     }
@@ -101,59 +103,35 @@ public class Fighter : MonoBehaviour
         if (!IsBoardCleared) //Takimlardan herhangi bir tarafin tum birimlerinin olup olmedigini kontrol eder.
         {
             FindNearestTarget(IsTargetEnemyOrHero());
-            if(nearestTarget)
+            if (nearestTarget)
             {
                 CurrentState = CharacterStates.Locked;
             }
         }
     }
-    IEnumerator LockedState()
+    void LockedState()
     {
-        while(true)
+        if (nearestTarget)
         {
-            if (nearestTarget != null)
-            {
-                LockedTarget = nearestTarget.transform;
-
-                Vector3 direction = LockedTarget.position - transform.position; //Kilitlenilecek dü?man ile aradaki mesafe
-                Quaternion lookRotation = Quaternion.LookRotation(direction); //Dü?man?n pozisyonuna göre karakterin dönece?i yönü belirler
-                Vector3 rotation = Quaternion.Lerp(gameObject.transform.rotation, lookRotation, Time.deltaTime * TurnSpeed).eulerAngles; //dönü? aç?s?n? belirler
-                gameObject.transform.rotation = Quaternion.Euler(0f, rotation.y, 0f); //Dönü? aç?s?na göre karakterin dönmesini sa?lar          
-                float distanceBetweenCharacters = (Vector3.Distance(gameObject.transform.position, LockedTarget.transform.position));
-
-                if (characterSO.characterType == meleeType)
-                {
-                    if (distanceBetweenCharacters >= 1f)
-                    {
-                        CurrentState = CharacterStates.Running;
-                    }
-                    else
-                    {
-                        CurrentState = CharacterStates.Fight;
-                    }
-                }
-                if (characterSO.characterType == wizardType)
-                {
-                    CurrentState = CharacterStates.Fight;
-                }
-            }
-            yield return new WaitForEndOfFrame();
+            LockedTarget = nearestTarget.transform;
         }
     }
     void RunningState()
     {
         float speedModifier = MovementSpeed * Time.deltaTime;
         gameObject.transform.position = Vector3.MoveTowards(transform.position, LockedTarget.position, speedModifier);
+        CheckDistanceBetweenTarget();
     }
     void FightState()
     {
+
         if (nearestTarget)
         {
             if (characterSO.characterType == meleeType)
             {
                 MeleeAttack();
             }
-            else if(characterSO.characterType == wizardType)
+            else if (characterSO.characterType == wizardType)
             {
                 WizardAttack();
             }
@@ -165,10 +143,50 @@ public class Fighter : MonoBehaviour
 
     }
 
-    void DeathState()
+    void CheckIsBoardCleared()
     {
-        Destroy(gameObject);
+        if (_enemies.Length <= 0)
+        {
+            IsBoardCleared = true;
+        }
+        else if (_heroes.Length <= 0)
+        {
+            IsBoardCleared = true;
+        }
     }
+    void LookToTarget()
+    {
+        Vector3 direction = LockedTarget.position - transform.position; //Kilitlenilecek dü?man ile aradaki mesafe
+        Quaternion lookRotation = Quaternion.LookRotation(direction); //Dü?man?n pozisyonuna göre karakterin dönece?i yönü belirler
+        Vector3 rotation = Quaternion.Lerp(gameObject.transform.rotation, lookRotation, Time.deltaTime * TurnSpeed).eulerAngles; //dönü? aç?s?n? belirler
+        gameObject.transform.rotation = Quaternion.Euler(0f, rotation.y, 0f); //Dönü? aç?s?na göre karakterin dönmesini sa?lar   
+    }
+    
+    void CheckDistanceBetweenTarget()
+    {
+        float distanceBetweenCharacters = (Vector3.Distance(gameObject.transform.position, LockedTarget.transform.position));
+        if(distanceBetweenCharacters >= 1f)
+        {
+            CurrentState = CharacterStates.Running;
+        }
+        else
+        {
+            CurrentState = CharacterStates.Fight;
+        }
+    }
+
+    void SetStatusByType()
+    {
+        if (characterSO.characterType == meleeType)
+        {
+            CheckDistanceBetweenTarget();
+        }
+        else if (characterSO.characterType == wizardType)
+        {
+            CurrentState = CharacterStates.Fight;
+        }
+    }
+
     GameObject FindNearestTarget(GameObject[] _targets)
     {
         float distance = Mathf.Infinity;
@@ -184,19 +202,7 @@ public class Fighter : MonoBehaviour
     }
     GameObject[] IsTargetEnemyOrHero()
     {
-        //if (transform.parent.name == "Enemies")
-        //{
-        //    return _heroes;
-        //}
-        //else if (transform.parent.name == "Heroes")
-        //{
-        //    return _enemies;
-        //}
-        //else
-        //{
-        //    return null;
-        //}
-        if(gameObject.tag == "Hero")
+        if (gameObject.tag == "Hero")
         {
             return _enemies;
         }
@@ -212,7 +218,7 @@ public class Fighter : MonoBehaviour
 
     void MeleeAttack()
     {
-        if(nearestTarget)
+        if (nearestTarget)
         {
             if (MeleeHitCooldown <= 0f)
             {
@@ -230,7 +236,7 @@ public class Fighter : MonoBehaviour
 
     void WizardAttack()
     {
-        if(nearestTarget)
+        if (nearestTarget)
         {
             if (spellCooldown <= 0f)
             {
@@ -248,11 +254,18 @@ public class Fighter : MonoBehaviour
     public void DealDamage(float damage)
     {
         LockedTarget.GetComponent<Fighter>().CurrentHealth -= damage;
-        LockedTarget.GetComponent<Fighter>().HealthBar.fillAmount = LockedTarget.GetComponent<Fighter>().CurrentHealth / LockedTarget.GetComponent<Fighter>().characterSO.MaxHealth;
+        //CoinManager.balance += CoinManager.getCoin * CoinManager.coinMultipler;   
+        //Burada hit başına ne kadar coin kazanılacağı hesaplanacak.
+        //Belirtilen değişkenler CoinManager içerisinde tanımlanacak.
+
+    }
+    void UpdateHealth()
+    {
+        HealthBar.fillAmount = CurrentHealth / characterSO.MaxHealth;
     }
     void AttackToEnemy()
     {
-        if(nearestTarget)
+        if (nearestTarget)
         {
             Transform targetsHitPoint = nearestTarget.GetComponent<Fighter>().HitPoint;
             GameObject effectIns = (GameObject)Instantiate(MeleeHitEffect, targetsHitPoint.position, targetsHitPoint.rotation);
@@ -266,7 +279,7 @@ public class Fighter : MonoBehaviour
     }
     void UseSpell()
     {
-        if(nearestTarget)
+        if (nearestTarget)
         {
             GameObject spellGO = (GameObject)Instantiate(SpellPrefab, FirePoint.position, FirePoint.rotation);
             Spells spell = spellGO.GetComponent<Spells>();
