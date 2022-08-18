@@ -18,7 +18,7 @@ public class GameManager : MonoSingleton<GameManager>
 
         DontDestroyOnLoad(gameObject);
         PlayerPrefs.DeleteKey("heroes"); // BUNU EN SON SÝL HA
-        PlayerPrefs.SetString("heroes", "MeleeFighter_v1,MeleeFighter_v1,Wizard_v1,Wizard_v2,MeleeFighter_v2");
+        //PlayerPrefs.SetString("heroes", "MeleeFighter_v1,MeleeFighter_v1,Wizard_v1,Wizard_v2,MeleeFighter_v2");
         currentLevel = PlayerPrefs.GetInt("level");
         if (PlayerPrefs.GetString("heroes").Length > 0)
         {
@@ -55,6 +55,23 @@ public class GameManager : MonoSingleton<GameManager>
         return PlayerPrefs.GetString("heroes").Split(',');
     }
 
+    public void buyHero(string heroName)
+    {
+        string[] heroes = getHeroes();
+        string newHeroes = "";
+        for (int i = 0; i < heroes.Length; i++)
+        {
+            newHeroes += heroes[i] + ",";
+        }
+        newHeroes += heroName;
+
+
+        if (LevelManager.Instance.placeIfAvailable(heroName))
+        {
+            PlayerPrefs.SetString("heroes", newHeroes);
+            //coin -= 20;
+        }
+    }
 }
 
 

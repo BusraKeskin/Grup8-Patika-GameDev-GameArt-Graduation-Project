@@ -21,12 +21,12 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Grid
+  - 
   - Water
   - UI
-  - Tile
+  - Grid
   - Sphere
-  - Fighter
+  - 
   - Hero
   - 
   - 

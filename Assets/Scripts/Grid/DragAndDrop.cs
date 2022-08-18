@@ -143,21 +143,54 @@ public class DragAndDrop : MonoBehaviour
            
             if (other.gameObject.GetComponent<Fighter>()?.type == myType)
             {
+                
                 if (myType == Fighter.Type.Wizard_v1)
                 {
 
                     GameObject.Instantiate(Resources.Load("Prefabs/Wizard_v2"), transform.position, Quaternion.identity);
-
+                    Destroy(other.gameObject);
+                    Destroy(gameObject);
                 }
                 else if (myType == Fighter.Type.MeleeFighter_v1)
                 {
 
 
                     GameObject.Instantiate(Resources.Load("Prefabs/MeleeFighter_v2"), transform.position, Quaternion.identity);
-
+                    Destroy(other.gameObject);
+                    Destroy(gameObject);
                 }
-                Destroy(other.gameObject);
-                Destroy(gameObject);
+                else if (myType == Fighter.Type.MeleeFighter_v2)
+                {
+
+
+                    GameObject.Instantiate(Resources.Load("Prefabs/MeleeFighter_v3"), transform.position, Quaternion.identity);
+                    Destroy(other.gameObject);
+                    Destroy(gameObject);
+                }
+                else if (myType == Fighter.Type.Wizard_v2)
+                {
+
+                    GameObject.Instantiate(Resources.Load("Prefabs/Wizard_v3"), transform.position, Quaternion.identity);
+                    Destroy(other.gameObject);
+                    Destroy(gameObject);
+                }
+                else if (myType == Fighter.Type.Wizard_v3)
+                {
+
+                    LevelManager.Instance.setGridEmptyState(firstGrid, false);
+                    Vector3 pos = firstGrid.GetComponent<Renderer>().bounds.center;
+                    gameObject.transform.position = new Vector3(pos.x, transform.position.y, pos.z);
+                }
+                else if (myType == Fighter.Type.MeleeFighter_v3)
+                {
+
+                    LevelManager.Instance.setGridEmptyState(firstGrid, false);
+                    Vector3 pos = firstGrid.GetComponent<Renderer>().bounds.center;
+                    gameObject.transform.position = new Vector3(pos.x, transform.position.y, pos.z);
+                }
+
+                LevelManager.Instance.isAllGridFull = false;
+                
             }
             else
             {

@@ -339,7 +339,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 79398936}
   m_LocalRotation: {x: -0.4325426, y: -0.001203728, z: 0.00048498999, w: -0.9016126}
-  m_LocalPosition: {x: 1.15, y: 6.7406006, z: -5.929886}
+  m_LocalPosition: {x: 1.15, y: 7.45, z: -6.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3271,6 +3271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HeroesParentObject: {fileID: 2066721982}
+  isAllGridFull: 0
   heroes: []
 --- !u!4 &2039767014
 Transform:
@@ -5077,7 +5078,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!65 &8704032885794167548
 BoxCollider:
