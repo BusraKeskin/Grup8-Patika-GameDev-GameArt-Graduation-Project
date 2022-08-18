@@ -11,6 +11,8 @@ public class GameManager : MonoSingleton<GameManager>
     public bool _isStart = false;
     public float heroCount;
     public int currentLevel;
+    //public List<GameObject> _HeroesList = new List<GameObject>();
+    public GameObject[] HeroesList;
 
     private void Start()
     {
@@ -40,8 +42,11 @@ public class GameManager : MonoSingleton<GameManager>
     public void isPlayModeOn()
     {
         _isStart = true;
+        HeroesList = GameObject.FindGameObjectsWithTag("Hero");
         //GameUICanvas.SetActive(false);
         //onModeChange(_isStart);
+        //UIManager.Instance.StartCoroutine(C)
+        UIManager.Instance.getTotalMaxHealth(HeroesList);
         UIManager.Instance.CurrentState = UIManager.UIStates.Fight;
     }
     public void isPlayModeOff()

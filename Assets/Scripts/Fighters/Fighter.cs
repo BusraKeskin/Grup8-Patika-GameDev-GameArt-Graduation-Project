@@ -32,7 +32,7 @@ public class Fighter : MonoBehaviour
 
     void Start()
     {
-        CurrentHealth = characterSO.CurrentHealth;
+        CurrentHealth = characterSO.MaxHealth;
         meleeType = CharacterSO.CharacterType.Melee;
         wizardType = CharacterSO.CharacterType.Wizard;
         CurrentState = CharacterStates.Idle;
@@ -184,13 +184,25 @@ public class Fighter : MonoBehaviour
     }
     GameObject[] IsTargetEnemyOrHero()
     {
-        if (transform.parent.name == "Enemies")
-        {
-            return _heroes;
-        }
-        else if (transform.parent.name == "Heroes")
+        //if (transform.parent.name == "Enemies")
+        //{
+        //    return _heroes;
+        //}
+        //else if (transform.parent.name == "Heroes")
+        //{
+        //    return _enemies;
+        //}
+        //else
+        //{
+        //    return null;
+        //}
+        if(gameObject.tag == "Hero")
         {
             return _enemies;
+        }
+        else if (gameObject.tag == "Enemy")
+        {
+            return _heroes;
         }
         else
         {
@@ -236,7 +248,6 @@ public class Fighter : MonoBehaviour
     public void DealDamage(float damage)
     {
         LockedTarget.GetComponent<Fighter>().CurrentHealth -= damage;
-        LockedTarget.GetComponent<Fighter>().characterSO.CurrentHealth = CurrentHealth;
         LockedTarget.GetComponent<Fighter>().HealthBar.fillAmount = LockedTarget.GetComponent<Fighter>().CurrentHealth / LockedTarget.GetComponent<Fighter>().characterSO.MaxHealth;
     }
     void AttackToEnemy()
