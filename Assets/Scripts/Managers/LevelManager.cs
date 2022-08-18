@@ -12,11 +12,9 @@ public class LevelManager : MonoSingleton<LevelManager>
     private Transform gridToPlaceHero;
     public bool isAllGridFull = false;
     public String[] heroes;
-    public List<GameObject> _Heroes = new List<GameObject>();
     private void Start()
     {
         heroes = GameManager.Instance.getHeroes();
-        Debug.Log(heroes);
         GridLayout = GameObject.FindGameObjectWithTag("GridLayout").transform; //GridLayout(gridlerin parent i) u bul
         foreach (Transform child in GridLayout)//her bir gridde dön
         {
@@ -270,7 +268,7 @@ public class LevelManager : MonoSingleton<LevelManager>
             //Debug.Log(heroName);
             GameObject newHero = (GameObject)(GameObject.Instantiate(Resources.Load("Prefabs/" + heroName), new Vector3(pos.x, 0.07f, pos.z), Quaternion.identity));
             newHero.transform.parent = HeroesParentObject.transform;
-                
+
             return true;
         }
     }

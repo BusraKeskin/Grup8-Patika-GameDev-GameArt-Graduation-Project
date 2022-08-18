@@ -12,7 +12,7 @@ public class Spells : MonoBehaviour
 
     private void Start()
     {
-        speed = 1f;
+        speed = 2.5f;
     }
     void Update()
     {
@@ -30,15 +30,6 @@ public class Spells : MonoBehaviour
             Vector3 dir = targetsPartToHit.transform.position - transform.position;
             float speedModifier = speed * Time.deltaTime;
             gameObject.transform.position = Vector3.MoveTowards(transform.position, targetsPartToHit.transform.position, speedModifier);
-
-            if (dir.magnitude <= speedModifier)
-            {
-                if(target)
-                {
-                    HitTarget();
-                    return;
-                }
-            }
         }
     }
 
@@ -49,14 +40,21 @@ public class Spells : MonoBehaviour
         damage = attackDamage;
     }
 
-    void HitTarget()
+    void DealSpellDamage(float damage)
     {
-        if(target)
+        target.GetComponent<Fighter>().CurrentHealth -= damage;
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == target.tag)
         {
-            GameObject effectIns = (GameObject)Instantiate(impactEffect, transform.position, transform.rotation);
-            Destroy(effectIns, 1f);
-            Destroy(gameObject);
-            target.GetComponent<Fighter>().DealDamage(damage);
+            if (target)
+            {
+                GameObject effectIns = (GameObject)Instantiate(impactEffect, transform.position, transform.rotation);
+                Destroy(effectIns, 1f);
+                Destroy(gameObject);
+                DealSpellDamage(damage);
+            }
         }
     }
 }

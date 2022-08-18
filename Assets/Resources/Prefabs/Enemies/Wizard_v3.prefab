@@ -25,14 +25,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2194241569897322383}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2203745344622378857}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.0025006, y: -0.00000053644}
@@ -353,9 +353,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7769676519521957986}
   - component: {fileID: 7769676521367136593}
-  - component: {fileID: 7769676521367136594}
   - component: {fileID: 7769676521367136595}
-  - component: {fileID: 7769676521367136588}
   - component: {fileID: 7351208879767459500}
   m_Layer: 7
   m_Name: Wizard_v3
@@ -395,28 +393,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &7769676521367136594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7769676521367136590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ba21ce1aeb65a84393798cff4faff36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectToMove: {fileID: 7769676521367136590, guid: 5d6befedf9195c548be433f43d333b4e,
-    type: 3}
-  objectTMInstance: {fileID: 0}
-  gridMark: {fileID: 7769676519999227838}
-  instance: {fileID: 6220008669225945128}
-  LastPositionY: 0
-  MousePosition: {x: 0, y: 0, z: 0}
-  GridMaterial: {fileID: 2100000, guid: 1e942e31f3f3e3443b21382b7abcce79, type: 2}
-  DefaultMaterial: {fileID: 2100000, guid: acf696fcfc7d7a14da2b66aa4cbdb6a6, type: 2}
-  DragAndDropValues: {fileID: 11400000, guid: ea4db0af68498274fad21a8a2054c702, type: 2}
 --- !u!54 &7769676521367136595
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -433,28 +409,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!195 &7769676521367136588
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7769676521367136590}
-  m_Enabled: 0
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!114 &7351208879767459500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,7 +427,8 @@ MonoBehaviour:
   IsBoardCleared: 0
   LockedTarget: {fileID: 0}
   TurnSpeed: 20
-  SpellPrefab: {fileID: 0}
+  SpellPrefab: {fileID: 4186499339936612587, guid: 7ab0931aeae4fc54cb539c1027b88c01,
+    type: 3}
   MeleeHitEffect: {fileID: 6751423670734270617, guid: 868d4dd5bf994b4458fe073a8f5b04af,
     type: 3}
   FirePoint: {fileID: 1913337291188583559}

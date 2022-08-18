@@ -144,9 +144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7769676519521957986}
   - component: {fileID: 7769676521367136593}
-  - component: {fileID: 7769676521367136594}
   - component: {fileID: 7769676521367136595}
-  - component: {fileID: 7769676521367136588}
   - component: {fileID: 2450921700738492034}
   m_Layer: 7
   m_Name: Wizard_v1
@@ -186,28 +184,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &7769676521367136594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7769676521367136590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ba21ce1aeb65a84393798cff4faff36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectToMove: {fileID: 7769676521367136590, guid: 7fe2bfb10d623c24989a125f80c3fed6,
-    type: 3}
-  objectTMInstance: {fileID: 0}
-  gridMark: {fileID: 7769676519999227838}
-  instance: {fileID: 829596328873338144}
-  LastPositionY: 0
-  MousePosition: {x: 0, y: 0, z: 0}
-  GridMaterial: {fileID: 2100000, guid: 1e942e31f3f3e3443b21382b7abcce79, type: 2}
-  DefaultMaterial: {fileID: 2100000, guid: acf696fcfc7d7a14da2b66aa4cbdb6a6, type: 2}
-  DragAndDropValues: {fileID: 11400000, guid: ea4db0af68498274fad21a8a2054c702, type: 2}
 --- !u!54 &7769676521367136595
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -224,28 +200,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!195 &7769676521367136588
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7769676521367136590}
-  m_Enabled: 0
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!114 &2450921700738492034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -518,22 +472,22 @@ PrefabInstance:
     - target: {fileID: 441944758809002804, guid: 1895c3822481a414fa85ac80a9fa5d91,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 441944758809002804, guid: 1895c3822481a414fa85ac80a9fa5d91,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 441944758809002804, guid: 1895c3822481a414fa85ac80a9fa5d91,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 441944758809002804, guid: 1895c3822481a414fa85ac80a9fa5d91,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 441944758809002804, guid: 1895c3822481a414fa85ac80a9fa5d91,
         type: 3}
@@ -553,7 +507,7 @@ PrefabInstance:
     - target: {fileID: 441944758809002804, guid: 1895c3822481a414fa85ac80a9fa5d91,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -180
       objectReference: {fileID: 0}
     - target: {fileID: 441944758809002804, guid: 1895c3822481a414fa85ac80a9fa5d91,
         type: 3}

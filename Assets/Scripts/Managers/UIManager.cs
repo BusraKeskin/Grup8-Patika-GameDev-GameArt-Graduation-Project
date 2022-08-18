@@ -15,7 +15,6 @@ public class UIManager : MonoSingleton<UIManager>
     public Image HealthBar;
     float maxTotalHealth;
     float currentTotalHealth;
-    GameObject[] _heroes;
     GameObject[] _aliveHeroes;
 
     private void Awake()
@@ -23,10 +22,6 @@ public class UIManager : MonoSingleton<UIManager>
         CurrentState = UIStates.Main;
     }
 
-    private void Start()
-    {
-        StartCoroutine(checkHeroList());
-    }
     private void Update()
     {
 
@@ -90,33 +85,16 @@ public class UIManager : MonoSingleton<UIManager>
         currentTotalHealth = 0f;
         foreach (var hero in _aliveHeroes)
         {
-            currentTotalHealth += hero.GetComponent<Fighter>().characterSO.CurrentHealth;
+            currentTotalHealth += hero.GetComponent<Fighter>().CurrentHealth;
         }
         HealthBar.fillAmount = currentTotalHealth / maxTotalHealth;
     }
-    public void getTotalMaxHealth()
+    public void getTotalMaxHealth(GameObject[] heroList)
     {
         maxTotalHealth = 0;
-        foreach (var hero in _heroes)
+        foreach (var hero in heroList)
         {
             maxTotalHealth += hero.GetComponent<Fighter>().characterSO.MaxHealth;
         }
-    }
-    IEnumerator checkHeroList()
-    {
-        while(true)
-        {
-            yield return new WaitForSeconds(1);
-            if(_heroes == null)
-            {
-                if(LevelManager.Instance._Heroes != null)
-                {
-                    _heroes = LevelManager.Instance._Heroes.ToArray();
-                    getTotalMaxHealth();
-                }
-            }
-                yield return new WaitForEndOfFrame();
-        }
-
     }
 }
