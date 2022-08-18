@@ -7,7 +7,7 @@ public class GameManager : MonoSingleton<GameManager>
 {
     public GameObject GameUICanvas;
     public delegate void modeChangeDelegate(bool mode);
-    public static event modeChangeDelegate onModeChange;
+    //public static event modeChangeDelegate onModeChange;
     public bool _isStart = false;
     public float heroCount;
     public int currentLevel;

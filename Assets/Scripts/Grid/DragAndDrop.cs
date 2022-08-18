@@ -23,9 +23,8 @@ public class DragAndDrop : MonoBehaviour
 
 
     private bool _onGrid;
-
-    private Touch theTouch;
-
+     
+    
     void Start()
     {
         Physics.IgnoreCollision(instance.GetComponent<Collider>(), transform.GetComponent<Collider>());
@@ -35,82 +34,79 @@ public class DragAndDrop : MonoBehaviour
 
     void Update()
     {
-        if (!GameManager.Instance._isStart && !overClick)
+        if (!GameManager.Instance._isStart && !overClick) 
         {
-            if (Input.touchCount > 0)
+            if (Input.GetMouseButtonDown(0)) //Mouse a tıklandiginda
             {
-                theTouch = Input.GetTouch(0);
-                if (theTouch.phase == TouchPhase.Began) //Mouse a tıklandiginda
+                MousePosition = Input.mousePosition;
+                Ray ray = Camera.main.ScreenPointToRay(MousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, ElonMask)) //Eger mouse un bulundugu yerde bir obje varsa
                 {
-                    Ray ray = Camera.main.ScreenPointToRay(theTouch.position);
-                    RaycastHit hit;
-
-                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, ElonMask)) //Eger mouse un bulundugu yerde bir obje varsa
+                    //int PosX = (int)Mathf.Round(hit.point.x); //Grid hareketi vermek için koordinatları tam sayiya yuvarliyoruz
+                    //int PosZ = (int)Mathf.Round(hit.point.z);
+                    if (hit.transform.GetInstanceID() == gameObject.transform.GetInstanceID()) //Mouse un tiklandıgı obje bu scriptin atandigi obje ise,
                     {
-                        //int PosX = (int)Mathf.Round(hit.point.x); //Grid hareketi vermek için koordinatları tam sayiya yuvarliyoruz
-                        //int PosZ = (int)Mathf.Round(hit.point.z);
-                        if (hit.transform.GetInstanceID() == gameObject.transform.GetInstanceID()) //Mouse un tiklandıgı obje bu scriptin atandigi obje ise,
-                        {
 
-                            _isMe = true;
-                            RaycastHit _hit;
-                            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out _hit, 10f, DragAndDropValues.GridMask))
-                            {
-                                firstGrid = _hit.transform;
-                                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow, 5);
-                                //LevelManager.Instance.findGrid(_hit.transform);
-                                LevelManager.Instance.setGridEmptyState(firstGrid, true);
-                            }
-                            instance.SetActive(false);
-                            objectTMInstance = GameObject.Instantiate(objectToMove, transform.position, Quaternion.identity);
-                        }
-                        else
+                        _isMe = true;
+                        RaycastHit _hit;
+                        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out _hit, 10f, DragAndDropValues.GridMask))
                         {
-                            _isMe = false;
+                            firstGrid = _hit.transform;
+                            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow, 5);
+                            //LevelManager.Instance.findGrid(_hit.transform);
+                            LevelManager.Instance.setGridEmptyState(firstGrid, true);
                         }
-
+                        instance.SetActive(false);
+                        objectTMInstance = GameObject.Instantiate(objectToMove, transform.position, Quaternion.identity);
                     }
-
-                }
-                else if (theTouch.phase == TouchPhase.Moved) //Mouse basılı durumdayken,
-                {
-                    _isDraging = true;
-                    _checkMerge = false;
-
-                }
-                else if (theTouch.phase == TouchPhase.Ended)  //Elimi mousetan kaldirdigimda,
-                {
-                    overClick = true;
-                    StartCoroutine("preventOverClick");
-                    if (_isMe) //Az once tiklanan obje bensem
+                    else
                     {
-                        Ray __ray = Camera.main.ScreenPointToRay(theTouch.position);
-                        RaycastHit __hit;
-
-                        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out __hit, 10f, DragAndDropValues.GridMask))
-                        {
-                            if (LevelManager.Instance.checkIfGridEmpty(__hit.transform))
-                            {
-                                LevelManager.Instance.setGridEmptyState(__hit.transform, false);
-                            }
-                        }
-
-                        _isDraging = false;
                         _isMe = false;
-                        _checkMerge = true;
-                        instance.SetActive(true);
-                        gridMark.SetActive(false);
-                        Destroy(objectTMInstance);
-                        ElonMask = DragAndDropValues.AllMask;
                     }
 
                 }
+
+            }
+            else if (Input.GetMouseButton(0)) //Mouse basılı durumdayken,
+            {
+                _isDraging = true;
+                _checkMerge = false;
+
+            }
+            else if (Input.GetMouseButtonUp(0))  //Elimi mousetan kaldirdigimda,
+            {
+                overClick = true;
+                StartCoroutine("preventOverClick");
+                if (_isMe) //Az once tiklanan obje bensem
+                {
+                    Ray __ray = Camera.main.ScreenPointToRay(MousePosition);
+                    RaycastHit __hit;
+
+                    if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out __hit, 10f, DragAndDropValues.GridMask))
+                    {
+                        if (LevelManager.Instance.checkIfGridEmpty(__hit.transform))
+                        {
+                            LevelManager.Instance.setGridEmptyState(__hit.transform, false);
+                        }
+                    }
+
+                    _isDraging = false;
+                    _isMe = false;
+                    _checkMerge = true;
+                    instance.SetActive(true);
+                    gridMark.SetActive(false);
+                    Destroy(objectTMInstance);
+                    ElonMask = DragAndDropValues.AllMask;
+                }
+
             }
             if (_isDraging && _isMe) //Eger surukleme durumundaysa ve suruklenen obje scriptin oldugu obje ise,
             {
                 ElonMask = DragAndDropValues.GridMask;
-                theTouch = Input.GetTouch(0);
-                Ray ray = Camera.main.ScreenPointToRay(theTouch.position);
+                MousePosition = Input.mousePosition;
+                Ray ray = Camera.main.ScreenPointToRay(MousePosition);
                 RaycastHit hit;
 
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, ElonMask))
@@ -136,32 +132,66 @@ public class DragAndDrop : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         overClick = false;
     }
+   
 
-
-
+    
     private void OnTriggerEnter(Collider other)
     {
         if (_checkMerge)
         {
-            Fighter.Type myType = gameObject.GetComponent<Fighter>().type;
-
-            if (other.gameObject.GetComponent<Fighter>()?.type == myType)
+            CharacterSO.Type myType = gameObject.GetComponent<Fighter>().characterSO.type;
+           
+            if (other.gameObject.GetComponent<Fighter>()?.characterSO.type == myType)
             {
-                if (myType == Fighter.Type.Wizard_v1)
+                
+                if (myType == CharacterSO.Type.Wizard_v1)
                 {
 
                     GameObject.Instantiate(Resources.Load("Prefabs/Wizard_v2"), transform.position, Quaternion.identity);
-
+                   //gameObject.transform.parent.name == "Heroes";
+                    Destroy(other.gameObject);
+                    Destroy(gameObject);
                 }
-                else if (myType == Fighter.Type.MeleeFighter_v1)
+                else if (myType == CharacterSO.Type.MeleeFighter_v1)
                 {
 
 
                     GameObject.Instantiate(Resources.Load("Prefabs/MeleeFighter_v2"), transform.position, Quaternion.identity);
-
+                    Destroy(other.gameObject);
+                    Destroy(gameObject);
                 }
-                Destroy(other.gameObject);
-                Destroy(gameObject);
+                else if (myType == CharacterSO.Type.MeleeFighter_v2)
+                {
+
+
+                    GameObject.Instantiate(Resources.Load("Prefabs/MeleeFighter_v3"), transform.position, Quaternion.identity);
+                    Destroy(other.gameObject);
+                    Destroy(gameObject);
+                }
+                else if (myType == CharacterSO.Type.Wizard_v2)
+                {
+
+                    GameObject.Instantiate(Resources.Load("Prefabs/Wizard_v3"), transform.position, Quaternion.identity);
+                    Destroy(other.gameObject);
+                    Destroy(gameObject);
+                }
+                else if (myType == CharacterSO.Type.Wizard_v3)
+                {
+
+                    LevelManager.Instance.setGridEmptyState(firstGrid, false);
+                    Vector3 pos = firstGrid.GetComponent<Renderer>().bounds.center;
+                    gameObject.transform.position = new Vector3(pos.x, transform.position.y, pos.z);
+                }
+                else if (myType == CharacterSO.Type.MeleeFighter_v3)
+                {
+
+                    LevelManager.Instance.setGridEmptyState(firstGrid, false);
+                    Vector3 pos = firstGrid.GetComponent<Renderer>().bounds.center;
+                    gameObject.transform.position = new Vector3(pos.x, transform.position.y, pos.z);
+                }
+
+                LevelManager.Instance.isAllGridFull = false;
+                
             }
             else
             {

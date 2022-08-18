@@ -12,9 +12,6 @@ public class CubePlacement : MonoBehaviour
     private Renderer Render;
     public Material GridMaterial, DefaultMaterial;
 
-    private Touch theTouch;
-
-    
     void Start()
     {
         Render = GameObject.Find("Grid").GetComponent<Renderer>();
@@ -22,30 +19,27 @@ public class CubePlacement : MonoBehaviour
 
     void Update()
     {
-        if (Input.touchCount > 0)
+        if (Input.GetMouseButton(0))
         {
-                theTouch = Input.GetTouch(0);
-            if (theTouch.phase == TouchPhase.Began)
+            MousePosition = Input.mousePosition;
+            Ray ray = Camera.main.ScreenPointToRay(MousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, Mask))
             {
-                Ray ray = Camera.main.ScreenPointToRay(theTouch.position);
-                RaycastHit hit;
-
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, Mask))
+                int PosX = (int)Mathf.Round(hit.point.x);
+                int PosZ = (int)Mathf.Round(hit.point.z);
+                if (hit.transform.name == gameObject.name)
                 {
-                    int PosX = (int)Mathf.Round(hit.point.x);
-                    int PosZ = (int)Mathf.Round(hit.point.z);
-                    if (hit.transform.name == gameObject.name)
-                    {
-                        ObjectToMove.transform.position = new Vector3(PosX, LastPositionY, PosZ);
-                        Render.material = GridMaterial;
-                    }
-
+                    ObjectToMove.transform.position = new Vector3(PosX, LastPositionY, PosZ);
+                    Render.material = GridMaterial;
                 }
+                
             }
         }
+        
 
-
-        if (theTouch.phase == TouchPhase.Ended)
+        if (Input.GetMouseButtonUp(0))
         {
             Instantiate(ObjectToPlace, ObjectToMove.transform.position, Quaternion.identity);
             Destroy(gameObject);

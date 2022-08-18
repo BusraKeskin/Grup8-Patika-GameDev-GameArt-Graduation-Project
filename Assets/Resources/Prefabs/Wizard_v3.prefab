@@ -175,10 +175,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7769676519521957986}
   - component: {fileID: 7769676521367136593}
-  - component: {fileID: 7769676521367136594}
   - component: {fileID: 7769676521367136595}
   - component: {fileID: 7769676521367136588}
   - component: {fileID: 7351208879767459500}
+  - component: {fileID: 7634325206549000660}
   m_Layer: 7
   m_Name: Wizard_v3
   m_TagString: Hero
@@ -217,28 +217,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &7769676521367136594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7769676521367136590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ba21ce1aeb65a84393798cff4faff36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectToMove: {fileID: 7769676521367136590, guid: 5d6befedf9195c548be433f43d333b4e,
-    type: 3}
-  objectTMInstance: {fileID: 0}
-  gridMark: {fileID: 7769676519999227838}
-  instance: {fileID: 6220008669225945128}
-  LastPositionY: 0
-  MousePosition: {x: 0, y: 0, z: 0}
-  GridMaterial: {fileID: 2100000, guid: 1e942e31f3f3e3443b21382b7abcce79, type: 2}
-  DefaultMaterial: {fileID: 2100000, guid: acf696fcfc7d7a14da2b66aa4cbdb6a6, type: 2}
-  DragAndDropValues: {fileID: 11400000, guid: ea4db0af68498274fad21a8a2054c702, type: 2}
 --- !u!54 &7769676521367136595
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -304,6 +282,28 @@ MonoBehaviour:
   MeleeHitCooldown: 0
   CurrentHealth: 0
   HealthBar: {fileID: 1753091721383248875}
+--- !u!114 &7634325206549000660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7769676521367136590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3fd6928a009bd64d84761ee5b575655, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectToMove: {fileID: 7769676521367136590, guid: 5d6befedf9195c548be433f43d333b4e,
+    type: 3}
+  objectTMInstance: {fileID: 0}
+  gridMark: {fileID: 7769676519999227838}
+  instance: {fileID: 6220008669225945128}
+  LastPositionY: 0
+  MousePosition: {x: 0, y: 0, z: 0}
+  GridMaterial: {fileID: 2100000, guid: 1e942e31f3f3e3443b21382b7abcce79, type: 2}
+  DefaultMaterial: {fileID: 2100000, guid: acf696fcfc7d7a14da2b66aa4cbdb6a6, type: 2}
+  DragAndDropValues: {fileID: 11400000, guid: ea4db0af68498274fad21a8a2054c702, type: 2}
 --- !u!1001 &3371043279916476495
 PrefabInstance:
   m_ObjectHideFlags: 0
