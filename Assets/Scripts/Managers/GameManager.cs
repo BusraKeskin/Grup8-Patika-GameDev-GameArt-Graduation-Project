@@ -40,14 +40,16 @@ public class GameManager : MonoSingleton<GameManager>
     public void isPlayModeOn()
     {
         _isStart = true;
-        GameUICanvas.SetActive(false);
-        onModeChange(_isStart);
+        //GameUICanvas.SetActive(false);
+        //onModeChange(_isStart);
+        UIManager.Instance.CurrentState = UIManager.UIStates.Fight;
     }
     public void isPlayModeOff()
     {
         _isStart = false;
-        GameUICanvas.SetActive(true);
-        onModeChange(_isStart);
+        //GameUICanvas.SetActive(true);
+        //onModeChange(_isStart);
+        UIManager.Instance.CurrentState = UIManager.UIStates.Main;
     }
 
     public string[] getHeroes()

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37e8dec5ee338cd4cbcb89a820804225, type: 3}
+  m_Name: Wizard-v2
+  m_EditorClassIdentifier: 
+  MaxHealth: 19
+  AttackSpeed: 1
+  AttackDamage: 10
+  Test: 0
+  characterType: 1
+  type: 4
+  CurrentHealth: 19

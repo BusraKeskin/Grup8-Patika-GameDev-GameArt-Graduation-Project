@@ -12,6 +12,7 @@ public class LevelManager : MonoSingleton<LevelManager>
     private Transform gridToPlaceHero;
     public bool isAllGridFull = false;
     public String[] heroes;
+    public List<GameObject> _Heroes = new List<GameObject>();
     private void Start()
     {
         heroes = GameManager.Instance.getHeroes();
