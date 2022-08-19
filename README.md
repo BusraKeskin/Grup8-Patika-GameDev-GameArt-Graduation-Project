@@ -13,9 +13,9 @@ MERGE MINIS
 - Büşra Keskin / Developer
 - Selin Moralı / Developer
 - Muhammed Emen / Developer
-- Ahmet Nurullah Keskin / Art
-- Ecem Hazarhun / Art
-- Nur Akgür / Art
+- Ahmet Nurullah Keskin / Artist
+- Ecem Hazarhun / Artist
+- Nur Akgür / Artist
 
 ## Ürün Açıklaması
 
