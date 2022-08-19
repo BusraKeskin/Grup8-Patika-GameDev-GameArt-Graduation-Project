@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoSingleton<UIManager>
 {
-    public enum UIStates { Main, Settings, CardHero, Fight }; //UI States
+    public enum UIStates { Main, Settings, CardHero, Fight, Defeat, Victory }; //UI States
     public UIStates CurrentState;
     public GameObject MainPanel;
     public GameObject SettingsPanel; //Ayarlar butonuna t?kland???nda aç?lacak panel
@@ -17,6 +17,12 @@ public class UIManager : MonoSingleton<UIManager>
     float currentTotalHealth;
     GameObject[] _aliveHeroes;
 
+    public GameObject MeleeCards;
+    public GameObject WizardCards;
+
+    public GameObject DefeatPanel;
+    public GameObject VictoryPanel;
+
     private void Awake()
     {
         CurrentState = UIStates.Main;
@@ -24,7 +30,6 @@ public class UIManager : MonoSingleton<UIManager>
 
     private void Update()
     {
-
         // UI durumlar?n?n kontrolü
         switch (CurrentState)
         {
@@ -34,6 +39,8 @@ public class UIManager : MonoSingleton<UIManager>
                 SettingsPanel.SetActive(false);
                 HeroCardPanel.SetActive(false);
                 TotalLifeBar.SetActive(false);
+                DefeatPanel.SetActive(false);
+                VictoryPanel.SetActive(false);
                 break;
             case UIStates.Settings:
                 SettingsPanel.SetActive(true);
@@ -41,6 +48,8 @@ public class UIManager : MonoSingleton<UIManager>
                 LevelText.SetActive(true);
                 HeroCardPanel.SetActive(false);
                 TotalLifeBar.SetActive(false);
+                DefeatPanel.SetActive(false);
+                VictoryPanel.SetActive(false);
                 break;
             case UIStates.CardHero:
                 HeroCardPanel.SetActive(true);
@@ -48,10 +57,34 @@ public class UIManager : MonoSingleton<UIManager>
                 LevelText.SetActive(true);
                 SettingsPanel.SetActive(false);
                 TotalLifeBar.SetActive(false);
+                DefeatPanel.SetActive(false);
+                VictoryPanel.SetActive(false);
                 break;
             case UIStates.Fight:
                 TotalLifeBar.SetActive(true);
                 LevelText.SetActive(true);
+                MainPanel.SetActive(false);
+                SettingsPanel.SetActive(false);
+                HeroCardPanel.SetActive(false);
+                DefeatPanel.SetActive(false);
+                VictoryPanel.SetActive(false);
+                break;
+            case UIStates.Defeat:
+
+                DefeatPanel.SetActive(true);
+                VictoryPanel.SetActive(false);
+                TotalLifeBar.SetActive(false);
+                LevelText.SetActive(false);
+                MainPanel.SetActive(false);
+                SettingsPanel.SetActive(false);
+                HeroCardPanel.SetActive(false);
+                break;
+            case UIStates.Victory:
+
+                VictoryPanel.SetActive(true);
+                DefeatPanel.SetActive(false);
+                TotalLifeBar.SetActive(false);
+                LevelText.SetActive(false);
                 MainPanel.SetActive(false);
                 SettingsPanel.SetActive(false);
                 HeroCardPanel.SetActive(false);
@@ -66,6 +99,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void OnMainMenu()
     {
+        
         CurrentState = UIStates.Main;
     }
 
@@ -80,6 +114,29 @@ public class UIManager : MonoSingleton<UIManager>
         //Hero card butonuna t?kland???nda
         CurrentState = UIStates.CardHero;
     }
+
+    public void OnDefeat()
+    {
+        CurrentState = UIStates.Defeat;
+    }
+    
+    public void OnVictory()
+    {
+        CurrentState=UIStates.Victory;
+    }
+
+    public void ShowMeleeCards()
+    {
+        MeleeCards.SetActive(true);
+        WizardCards.SetActive(false);
+    }
+
+    public void ShowWizardCards()
+    {
+        WizardCards.SetActive(true);
+        MeleeCards.SetActive(false);
+    }
+
     public void getTotalCurrentHealth()
     {
         currentTotalHealth = 0f;

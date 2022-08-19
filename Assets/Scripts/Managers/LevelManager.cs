@@ -29,7 +29,6 @@ public class LevelManager : MonoSingleton<LevelManager>
 
         foreach (string heroName in heroes)
         {
-            
             bool result = placeIfAvailable(heroName);
             
             if (!result)
@@ -40,10 +39,6 @@ public class LevelManager : MonoSingleton<LevelManager>
             }
 
         }
-
-        //setGridEmptyState(GameObject.Find("stone_grid (2)").transform, false);
-        //setGridEmptyState(GameObject.Find("stone_grid (2)").transform, false);
-        //setGridEmptyState(GameObject.Find("stone_grid (13)").transform, false);
 
 
         //elimizde þöyle bir Dict oluþtu:
@@ -63,6 +58,7 @@ public class LevelManager : MonoSingleton<LevelManager>
 
     private void Update()
     {
+        //Gridlerin dolu/boþ durumlarýný ekrana bastýrmak için. Sadece geliþtirmede kontrol amaçlý
         if (Input.GetKeyDown(KeyCode.P))
         {
             foreach (var data in gridList)
@@ -83,7 +79,7 @@ public class LevelManager : MonoSingleton<LevelManager>
             }
         }
 
-        return false;
+        return false; //bulamazsa false döner, bu nedenle kullanýldýðý yerde önce false mý kontrolü yapýlmalý, false deðilse data yý "KeyValueVapair" cast ý ile almalý, örnek kullanýmý mevcut
     }
 
     public bool checkIfGridEmpty(Transform gridObject)
@@ -96,13 +92,13 @@ public class LevelManager : MonoSingleton<LevelManager>
                 Transform dataItem = (Transform)(data.Value["item"]);
                 if (dataItem.name == gridObject.name)
                 {
-                    return true;
+                    return true; //sorgulanan grid boþsa true dön
                 }
             }
             
         }
 
-        return false;
+        return false;//sorgulanan grid doluysa false dön
     }
 
     public bool setGridEmptyState(Transform gridObject ,bool state)
@@ -115,16 +111,16 @@ public class LevelManager : MonoSingleton<LevelManager>
             {
                 data.Value["isEmpty"] = (bool)state;
                 //Debug.Log("Grid information has been changed!");
-                return true;
+                return true; //aranan gridi bul ve doluluk durumunu istenen state yap, yani dolu/boþ olarak iþaretle. Ardýndan iþlemin baþarýlý olduðuna dair true dön
             }
 
         }
 
         //Debug.Log("Grid information can not be changed!");
-        return false;
+        return false; //aranan grid bulunamadýysa false dön
     }
 
-    public void GetAvailableGrid()
+    public void GetAvailableGrid() //yeni bir karakter eklenirken uygun olan ilk gridi
     {
         KeyValuePair<string, Dictionary<string, object>> gridAsListItem = (KeyValuePair<string, Dictionary<string, object>>)(getGridByName("stone_grid"));
         if ((bool)gridAsListItem.Value["isEmpty"] == true)
@@ -251,7 +247,7 @@ public class LevelManager : MonoSingleton<LevelManager>
         }
      }
 
-    public bool placeIfAvailable(string heroName)
+    public bool placeIfAvailable(string heroName) //Eðer isAllGridFull deðiþkeni true deðilse yani tüm gridler dolu deðilse uygun olan ilk gridi alýr karakteri oraya yerleþtirir
     {
 
         GetAvailableGrid();

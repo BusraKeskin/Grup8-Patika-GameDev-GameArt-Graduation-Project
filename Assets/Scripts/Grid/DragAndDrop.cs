@@ -146,7 +146,7 @@ public class DragAndDrop : MonoBehaviour
                 
                 if (myType == CharacterSO.Type.Wizard_v1)
                 {
-
+                    GameManager.Instance.updateHeroListAfterMerge("Wizard_v1", "Wizard_v2");
                     GameObject.Instantiate(Resources.Load("Prefabs/Wizard_v2"), transform.position, Quaternion.identity);
                    //gameObject.transform.parent.name == "Heroes";
                     Destroy(other.gameObject);
@@ -155,7 +155,7 @@ public class DragAndDrop : MonoBehaviour
                 else if (myType == CharacterSO.Type.MeleeFighter_v1)
                 {
 
-
+                    GameManager.Instance.updateHeroListAfterMerge("MeleeFighter_v1", "MeleeFighter_v2");
                     GameObject.Instantiate(Resources.Load("Prefabs/MeleeFighter_v2"), transform.position, Quaternion.identity);
                     Destroy(other.gameObject);
                     Destroy(gameObject);
@@ -163,14 +163,14 @@ public class DragAndDrop : MonoBehaviour
                 else if (myType == CharacterSO.Type.MeleeFighter_v2)
                 {
 
-
+                    GameManager.Instance.updateHeroListAfterMerge("MeleeFighter_v2", "MeleeFighter_v3");
                     GameObject.Instantiate(Resources.Load("Prefabs/MeleeFighter_v3"), transform.position, Quaternion.identity);
                     Destroy(other.gameObject);
                     Destroy(gameObject);
                 }
                 else if (myType == CharacterSO.Type.Wizard_v2)
                 {
-
+                    GameManager.Instance.updateHeroListAfterMerge("Wizard_v2", "Wizard_v3");
                     GameObject.Instantiate(Resources.Load("Prefabs/Wizard_v3"), transform.position, Quaternion.identity);
                     Destroy(other.gameObject);
                     Destroy(gameObject);

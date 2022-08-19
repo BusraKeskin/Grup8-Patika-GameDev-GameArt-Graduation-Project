@@ -147,8 +147,8 @@ Library: lib_burst_generated
 --root-assembly=C:\Users\aspac\Desktop\Projects\Patika-GameDev-GameArt-Graduation-Project\Temp\StagingArea\Data\Managed\Unity.TextMeshPro.dll
 --root-assembly=C:\Users\aspac\Desktop\Projects\Patika-GameDev-GameArt-Graduation-Project\Temp\StagingArea\Data\Managed\Unity.Timeline.dll
 --root-assembly=C:\Users\aspac\Desktop\Projects\Patika-GameDev-GameArt-Graduation-Project\Temp\StagingArea\Data\Managed\Unity.RenderPipeline.Universal.ShaderLibrary.dll
---root-assembly=C:\Users\aspac\Desktop\Projects\Patika-GameDev-GameArt-Graduation-Project\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll
 --root-assembly=C:\Users\aspac\Desktop\Projects\Patika-GameDev-GameArt-Graduation-Project\Temp\StagingArea\Data\Managed\Unity.Services.Core.Environments.dll
+--root-assembly=C:\Users\aspac\Desktop\Projects\Patika-GameDev-GameArt-Graduation-Project\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll
 --root-assembly=C:\Users\aspac\Desktop\Projects\Patika-GameDev-GameArt-Graduation-Project\Temp\StagingArea\Data\Managed\Unity.Services.Core.Internal.dll
 --root-assembly=C:\Users\aspac\Desktop\Projects\Patika-GameDev-GameArt-Graduation-Project\Temp\StagingArea\Data\Managed\Unity.Services.Core.Analytics.dll
 --root-assembly=C:\Users\aspac\Desktop\Projects\Patika-GameDev-GameArt-Graduation-Project\Temp\StagingArea\Data\Managed\Unity.Services.Core.Scheduler.dll

@@ -22,6 +22,7 @@ public class Fighter : MonoBehaviour
     public float MeleeHitCooldown = 0f;
     public float CurrentHealth;
     public Image HealthBar;
+    private string winnerSide = "Büşra";
 
     private GameObject[] _enemies;
     private GameObject[] _heroes;
@@ -84,6 +85,16 @@ public class Fighter : MonoBehaviour
             if (IsBoardCleared)
             {
                 GameManager.Instance._isStart = false;
+                if(winnerSide == "Enemies")
+                {
+                    GameManager.Instance.calculateCoin(15); //Kaybetme ödülü olarak 15 coin
+                    UIManager.Instance.OnDefeat();
+
+                }else if(winnerSide == "Heroes")
+                {
+                    GameManager.Instance.calculateCoin(25); //Kazanma ödülü olarak 25 coin
+                    UIManager.Instance.OnVictory();
+                }
             }
 
             if (CurrentHealth <= 0f)
@@ -148,10 +159,12 @@ public class Fighter : MonoBehaviour
         if (_enemies.Length <= 0)
         {
             IsBoardCleared = true;
+            winnerSide = "Heroes";
         }
         else if (_heroes.Length <= 0)
         {
             IsBoardCleared = true;
+            winnerSide = "Enemies";
         }
     }
     void LookToTarget()
