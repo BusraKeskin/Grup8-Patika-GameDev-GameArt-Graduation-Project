@@ -70,7 +70,7 @@ public class UIManager : MonoSingleton<UIManager>
                 VictoryPanel.SetActive(false);
                 break;
             case UIStates.Defeat:
-
+                GameManager.Instance.FailedLevelCoinsText.text = GameManager.Instance.LevelCoin.ToString();
                 DefeatPanel.SetActive(true);
                 VictoryPanel.SetActive(false);
                 TotalLifeBar.SetActive(false);
@@ -80,7 +80,7 @@ public class UIManager : MonoSingleton<UIManager>
                 HeroCardPanel.SetActive(false);
                 break;
             case UIStates.Victory:
-
+                GameManager.Instance.VictoryLevelCoinsText.text = GameManager.Instance.LevelCoin.ToString();
                 VictoryPanel.SetActive(true);
                 DefeatPanel.SetActive(false);
                 TotalLifeBar.SetActive(false);

@@ -43,7 +43,14 @@ public class Spells : MonoBehaviour
     void DealSpellDamage(float damage)
     {
         target.GetComponent<Fighter>().CurrentHealth -= damage;
+
+        if(target.tag == "Enemy")
+        {
+            GameManager.Instance.calculateCoin((int)(damage * GameManager.Instance.CoinMultiplier));
+            GameManager.Instance.LevelCoin += (int)(damage * GameManager.Instance.CoinMultiplier);
+        }
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == target.tag)

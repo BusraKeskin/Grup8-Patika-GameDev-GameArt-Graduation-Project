@@ -87,12 +87,14 @@ public class Fighter : MonoBehaviour
                 GameManager.Instance._isStart = false;
                 if(winnerSide == "Enemies")
                 {
-                    GameManager.Instance.calculateCoin(15); //Kaybetme ödülü olarak 15 coin
+                    //GameManager.Instance.calculateCoin(15); //Kaybetme ödülü olarak 15 coin
                     UIManager.Instance.OnDefeat();
 
                 }else if(winnerSide == "Heroes")
                 {
-                    GameManager.Instance.calculateCoin(25); //Kazanma ödülü olarak 25 coin
+                    GameManager.Instance.LevelCoin = GameManager.Instance.LevelCoin * 2;
+                    GameManager.Instance.calculateCoin(GameManager.Instance.LevelCoin/2);
+                    //GameManager.Instance.calculateCoin(25); //Kazanma ödülü olarak 25 coin
                     UIManager.Instance.OnVictory();
                 }
             }
@@ -264,14 +266,6 @@ public class Fighter : MonoBehaviour
         }
     }
 
-    public void DealDamage(float damage)
-    {
-        LockedTarget.GetComponent<Fighter>().CurrentHealth -= damage;
-        //CoinManager.balance += CoinManager.getCoin * CoinManager.coinMultipler;   
-        //Burada hit başına ne kadar coin kazanılacağı hesaplanacak.
-        //Belirtilen değişkenler CoinManager içerisinde tanımlanacak.
-
-    }
     void UpdateHealth()
     {
         HealthBar.fillAmount = CurrentHealth / characterSO.MaxHealth;
@@ -288,6 +282,15 @@ public class Fighter : MonoBehaviour
         else
         {
             CurrentState = CharacterStates.Idle;
+        }
+    }
+    public void DealDamage(float damage)
+    {
+        LockedTarget.GetComponent<Fighter>().CurrentHealth -= damage;
+        if(gameObject.tag == "Hero")
+        {
+            GameManager.Instance.calculateCoin((int)(damage * GameManager.Instance.CoinMultiplier));
+            GameManager.Instance.LevelCoin += (int)(damage * GameManager.Instance.CoinMultiplier);
         }
     }
     void UseSpell()

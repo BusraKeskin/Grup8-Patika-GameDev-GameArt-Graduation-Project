@@ -12,13 +12,22 @@ public class GameManager : MonoSingleton<GameManager>
     public delegate void modeChangeDelegate(bool mode);
     //public static event modeChangeDelegate onModeChange;
     public bool _isStart = false;
-    private int MeleeFighterV1Price = 10;
-    private int WizardV1Price = 15;
+    private int MeleeFighterV1Price = 20;
+    private int WizardV1Price = 30;
+    private bool isLevel1Repeated = false;
+    private int startCoin = 15;
     public int coins = 0;
+    public int LevelCoin = 0; //Level icerisinde kazanilan coin. Her level sifirlaniyor.
+    public float CoinMultiplier = 1f; //Karakter hasar verdiginde "Karakterin gucu * CoinMultiplier" kadar coin kazandirir.
     public float heroCount;
     public int currentLevel;
+    public TextMeshProUGUI VictoryLevelCoinsText;
+    public TextMeshProUGUI FailedLevelCoinsText;
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI coinsText;
+    [SerializeField] private TextMeshProUGUI _warriorPriceText;
+    [SerializeField] private TextMeshProUGUI _wizardPriceText;
+
     //public List<GameObject> _HeroesList = new List<GameObject>();
     public GameObject[] HeroesList;
 
@@ -29,7 +38,11 @@ public class GameManager : MonoSingleton<GameManager>
         //PlayerPrefs.DeleteKey("level");
         float heroCount;
         coins = PlayerPrefs.GetInt("coins"); //setlenmemiþ bir playerpref alýnmaya çalýþýrsa carsayýlan olarak 0 geliyor
+
+
         coinsText.text = coins.ToString();
+        _warriorPriceText.text = MeleeFighterV1Price.ToString();
+        _wizardPriceText.text = WizardV1Price.ToString();
         //PlayerPrefs.SetString("heroes", "MeleeFighter_v1,MeleeFighter_v1,Wizard_v1,Wizard_v2,MeleeFighter_v2");
         currentLevel = PlayerPrefs.GetInt("level");
         if (PlayerPrefs.GetString("heroes").Length > 0)
@@ -52,18 +65,28 @@ public class GameManager : MonoSingleton<GameManager>
         SceneManager.LoadScene("Level_" + currentLevel, LoadSceneMode.Additive); //GameUI sahnesini silmeden üzerine Level sahnesinide yükledi
     }
 
+    public void Update()
+    {
+        coinsText.text = coins.ToString();
+    }
+
     public void RestartLevel()
     {
+        LevelCoin = 0;
+        isLevel1Repeated = true;
         SceneManager.LoadScene("GameUI", LoadSceneMode.Single); //Tüm sahneleri önce kapatýr, ardýndan GameUI sahnesiin yeniden yükler, GameUI da zaten playerPrefsten currentLevel i alarak ona göre level sahnesini yüklediði için bu bize restart etkisi oluþturur. 
     }
     public void NextLevel()
     {
+        LevelCoin = 0;
+
         if(currentLevel == 3) //son level i de kazandýðýmýzý ifa eder
         {
             Debug.Log("You have defeated all enemies!");
 
             PlayerPrefs.DeleteKey("heroes");
             PlayerPrefs.DeleteKey("coins");
+            PlayerPrefs.SetInt("coins", startCoin); //Oyun tekrardan basladiginda verilecek olan coin tutarini belirler
             PlayerPrefs.DeleteKey("level");
 
              SceneManager.LoadScene("GameUI", LoadSceneMode.Single); //Ardýndan varolan tüm sahneleri silip GameUI sahnesini baþtan yükledik, GameUI da level sahnesini playerprefsten güncel level i sorgulayarak yüklediði için her þey týkýr týkýr týkýr týkýr iþledi, bkz: bu scriptin Start() ý.
@@ -77,6 +100,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void isPlayModeOn()
     {
         _isStart = true;
+        LevelCoin = 0;
         HeroesList = GameObject.FindGameObjectsWithTag("Hero");
         //GameUICanvas.SetActive(false);
         //onModeChange(_isStart);
