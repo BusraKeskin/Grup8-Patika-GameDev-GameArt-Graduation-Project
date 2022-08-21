@@ -7753,7 +7753,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5710605819815743367
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7970,7 +7970,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: MELEES
+  m_text: WARRIORS
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: abea875ff15546147aad58afb1c0146f, type: 2}
   m_sharedMaterial: {fileID: -8171609000191065736, guid: abea875ff15546147aad58afb1c0146f,
