@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 7769676521367136595}
   - component: {fileID: 2450921700738492034}
   - component: {fileID: 8942905893186388582}
+  - component: {fileID: 2435788824596961325}
   m_Layer: 7
   m_Name: Wizard_v1
   m_TagString: Hero
@@ -283,6 +284,26 @@ MonoBehaviour:
   GridMaterial: {fileID: 2100000, guid: 1e942e31f3f3e3443b21382b7abcce79, type: 2}
   DefaultMaterial: {fileID: 2100000, guid: acf696fcfc7d7a14da2b66aa4cbdb6a6, type: 2}
   DragAndDropValues: {fileID: 11400000, guid: ea4db0af68498274fad21a8a2054c702, type: 2}
+--- !u!95 &2435788824596961325
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7769676521367136590}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: ff744c8159a17a54bbb95a63d56d88c0, type: 3}
+  m_Controller: {fileID: 9100000, guid: 1d8b805cdc0950540aebddcf7ce47da0, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &523042796059990129
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -29,7 +29,7 @@ public class Fighter : MonoBehaviour
     private CharacterSO.CharacterType meleeType;
     private CharacterSO.CharacterType wizardType;
 
-
+    private Animator animator;
 
     void Start()
     {
@@ -39,6 +39,7 @@ public class Fighter : MonoBehaviour
         CurrentState = CharacterStates.Idle;
         MovementSpeed = 1f;
 
+        animator = transform.GetChild(1).GetComponent<Animator>();
     }
 
     void Update()
@@ -52,6 +53,9 @@ public class Fighter : MonoBehaviour
             {
                 case CharacterStates.Idle:
                     IdleState();
+                    animator.SetBool("isIdle", true);
+                    animator.SetBool("isRunning", false);
+                    animator.SetBool("isFighting", false);
                     //Bir hedefe locklanmal? ve state'i locked olarak de?i?meli.
                     break;
                 case CharacterStates.Locked:
@@ -64,16 +68,25 @@ public class Fighter : MonoBehaviour
                     if (nearestTarget)
                     {
                         RunningState();
+                        animator.SetBool("isIdle", false);
+                        animator.SetBool("isRunning", true);
+                        animator.SetBool("isFighting", false);
                     }
                     else
                     {
                         CurrentState = CharacterStates.Idle;
+                        animator.SetBool("isIdle", true);
+                        animator.SetBool("isRunning", false);
+                        animator.SetBool("isFighting", false);
                     }
 
                     //En yak?n mesafedeki target'a do?ru ko?acak. Aras?ndaki mesafe 2f'ten küçük olduktan sonra Sald?racak.
                     break;
                 case CharacterStates.Fight:
                     FightState();
+                    animator.SetBool("isIdle", false);
+                    animator.SetBool("isRunning", false);
+                    animator.SetBool("isFighting", true);
                     //En yak?n rakibe sald?racak.
                     break;
             }
@@ -85,12 +98,13 @@ public class Fighter : MonoBehaviour
             if (IsBoardCleared)
             {
                 GameManager.Instance._isStart = false;
-                if(winnerSide == "Enemies")
+                if (winnerSide == "Enemies")
                 {
                     GameManager.Instance.calculateCoin(15); //Kaybetme ödülü olarak 15 coin
                     UIManager.Instance.OnDefeat();
 
-                }else if(winnerSide == "Heroes")
+                }
+                else if (winnerSide == "Heroes")
                 {
                     GameManager.Instance.calculateCoin(25); //Kazanma ödülü olarak 25 coin
                     UIManager.Instance.OnVictory();
@@ -174,11 +188,11 @@ public class Fighter : MonoBehaviour
         Vector3 rotation = Quaternion.Lerp(gameObject.transform.rotation, lookRotation, Time.deltaTime * TurnSpeed).eulerAngles; //dönü? aç?s?n? belirler
         gameObject.transform.rotation = Quaternion.Euler(0f, rotation.y, 0f); //Dönü? aç?s?na göre karakterin dönmesini sa?lar   
     }
-    
+
     void CheckDistanceBetweenTarget()
     {
         float distanceBetweenCharacters = (Vector3.Distance(gameObject.transform.position, LockedTarget.transform.position));
-        if(distanceBetweenCharacters >= 1f)
+        if (distanceBetweenCharacters >= 1f)
         {
             CurrentState = CharacterStates.Running;
         }
