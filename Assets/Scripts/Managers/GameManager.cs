@@ -15,40 +15,47 @@ public class GameManager : MonoSingleton<GameManager>
     private int MeleeFighterV1Price = 10;
     private int WizardV1Price = 15;
     public int coins = 0;
-    public float heroCount;
-    public int currentLevel;
+    public int currentLevel = 1; //default 1
     [SerializeField] private TextMeshProUGUI levelText;
-    [SerializeField] private TextMeshProUGUI coinsText;
+    public TextMeshProUGUI coinsText;
+    [SerializeField] private TextMeshProUGUI MeleeFighterV1PriceText;
+    [SerializeField] private TextMeshProUGUI WizardV1PriceText;
     //public List<GameObject> _HeroesList = new List<GameObject>();
     public GameObject[] HeroesList;
 
-    private void Start()
+
+    public int defaultMeleeFighterPrice = 10;
+    public int defaulWizardPrice = 15;
+
+    public int meleeHitReward = 1;
+    public int spellHitReward = 1;
+    public int nextLevelReward = 15;
+    public int raiseOnBuyMeleeFighter = 2;
+    public int raiseOnBuyWizard = 2;
+    public int raiseOnNextLevelMeleeFighter = 4;
+    public int raiseOnNextLevelWizard = 4;
+    public int successReward = 25;
+    public int failReward = 15;
+
+    private void Awake()
     {
         //PlayerPrefs.DeleteKey("heroes");
         //PlayerPrefs.DeleteKey("coins");
         //PlayerPrefs.DeleteKey("level");
-        float heroCount;
-        coins = PlayerPrefs.GetInt("coins"); //setlenmemiþ bir playerpref alýnmaya çalýþýrsa carsayýlan olarak 0 geliyor
+
+
+        if (PlayerPrefs.HasKey("coins")) coins = PlayerPrefs.GetInt("coins");
+        if (PlayerPrefs.HasKey("MeleeFighterV1Price")) MeleeFighterV1Price = PlayerPrefs.GetInt("MeleeFighterV1Price"); // ilgili player pref setlenmiþmi kontrol et
+        if (PlayerPrefs.HasKey("WizardV1Price")) WizardV1Price = PlayerPrefs.GetInt("WizardV1Price"); // ilgili player pref setlenmiþmi kontrol et
+        if (!PlayerPrefs.HasKey("heroes")) PlayerPrefs.SetString("heroes", "MeleeFighter_v1");
+        if (PlayerPrefs.HasKey("level")) currentLevel = PlayerPrefs.GetInt("level");
+    }
+    private void Start()
+    {
         coinsText.text = coins.ToString();
-        //PlayerPrefs.SetString("heroes", "MeleeFighter_v1,MeleeFighter_v1,Wizard_v1,Wizard_v2,MeleeFighter_v2");
-        currentLevel = PlayerPrefs.GetInt("level");
-        if (PlayerPrefs.GetString("heroes").Length > 0)
-        {
-            heroCount = PlayerPrefs.GetString("heroes").Split(',').Length;
-        }
-        else
-        {
-            heroCount = 0;
-            PlayerPrefs.SetString("heroes", "MeleeFighter_v1");
-        }
-
-        if (currentLevel == 0)
-        {
-            currentLevel = 1;
-            PlayerPrefs.SetInt("level", 1);
-        }
-
         levelText.text = "LEVEL " + currentLevel;
+        MeleeFighterV1PriceText.text = MeleeFighterV1Price.ToString();
+        WizardV1PriceText.text = WizardV1Price.ToString();
         SceneManager.LoadScene("Level_" + currentLevel, LoadSceneMode.Additive); //GameUI sahnesini silmeden üzerine Level sahnesinide yükledi
     }
 
@@ -62,15 +69,23 @@ public class GameManager : MonoSingleton<GameManager>
         {
             Debug.Log("You have defeated all enemies!");
 
-            PlayerPrefs.DeleteKey("heroes");
-            PlayerPrefs.DeleteKey("coins");
-            PlayerPrefs.DeleteKey("level");
+            PlayerPrefs.DeleteAll(); // cihaz hafýzasýnda tutulan tüm deðerleri sýfýrlar, amaç oyun bittiðinde oyunu en baþtan baþlatmak
 
-             SceneManager.LoadScene("GameUI", LoadSceneMode.Single); //Ardýndan varolan tüm sahneleri silip GameUI sahnesini baþtan yükledik, GameUI da level sahnesini playerprefsten güncel level i sorgulayarak yüklediði için her þey týkýr týkýr týkýr týkýr iþledi, bkz: bu scriptin Start() ý.
+            SceneManager.LoadScene("GameUI", LoadSceneMode.Single); //Ardýndan varolan tüm sahneleri silip GameUI sahnesini baþtan yükledik, GameUI da level sahnesini playerprefsten güncel level i sorgulayarak yüklediði için her þey týkýr týkýr týkýr týkýr iþledi, bkz: bu scriptin Start() ý.
 
             return;
         }
+
+        //Level atladýðýnda herolara enflasyon zammý uygula
+        WizardV1Price += raiseOnNextLevelWizard;
+        PlayerPrefs.SetInt("WizardV1Price", WizardV1Price);
+        MeleeFighterV1Price += raiseOnNextLevelMeleeFighter;
+        PlayerPrefs.SetInt("MeleeFighterV1Price", MeleeFighterV1Price);
+        MeleeFighterV1PriceText.text = MeleeFighterV1Price.ToString();
+        WizardV1PriceText.text = WizardV1Price.ToString();
+
         PlayerPrefs.SetInt("level", currentLevel + 1); //önce hafýzadaki güncel level i sonrakine ayarladýk
+
         SceneManager.LoadScene("GameUI", LoadSceneMode.Single); //Ardýndan varolan tüm sahneleri silip GameUI sahnesini baþtan yükledik, GameUI da level sahnesini playerprefsten güncel level i sorgulayarak yüklediði için her þey týkýr týkýr týkýr týkýr iþledi, bkz: bu scriptin Start() ý.
     }
 
@@ -125,10 +140,20 @@ public class GameManager : MonoSingleton<GameManager>
                 if (heroName == "Wizard_v1")
                 {
                     calculateCoin(-WizardV1Price); //satýn alýnan karaktere göre coins i azalt
+
+                    //Satýn alýmdan sonra hero nun fiyatýný 2 coin artýr
+                    WizardV1Price += raiseOnBuyWizard;
+                    PlayerPrefs.SetInt("WizardV1Price", WizardV1Price);
+                    WizardV1PriceText.text = WizardV1Price.ToString();
                 }
                 else if (heroName == "MeleeFighter_v1")
                 {
                     calculateCoin(-MeleeFighterV1Price); //satýn alýnan karaktere göre coins i azalt
+                    
+                    //Satýn alýmdan sonra hero nun fiyatýný 2 coin artýr
+                    MeleeFighterV1Price += raiseOnBuyMeleeFighter;
+                    PlayerPrefs.SetInt("MeleeFighterV1Price", MeleeFighterV1Price);
+                    MeleeFighterV1PriceText.text = MeleeFighterV1Price.ToString();
                 }
             }
         }
@@ -175,49 +200,3 @@ public class GameManager : MonoSingleton<GameManager>
     }
 }
 
-
-
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-//using UnityEngine.SceneManagement;
-
-//public class GameManager : MonoSingleton<GameManager>
-//{
-//    public GameObject GameUICanvas;
-//    public delegate void modeChangeDelegate(bool mode);
-//    public static event modeChangeDelegate onModeChange;
-//    public bool _isStart = false;
-
-
-//    public int currentLevel;
-
-//    private void Start()
-//    {
-//        DontDestroyOnLoad(gameObject);
-//        currentLevel = PlayerPrefs.GetInt("level");
-
-
-//        if (currentLevel == 0)
-//        {
-//            currentLevel = 1;
-//            PlayerPrefs.SetInt("level", 1);
-//        }
-//        SceneManager.LoadScene("Level_" + currentLevel, LoadSceneMode.Additive);
-//    }
-//    public void isPlayModeOn()
-//    {
-//        _isStart = true;
-//        GameUICanvas.SetActive(false);
-//        onModeChange(_isStart);
-//    }
-//    public void isPlayModeOff()
-//    {
-//        _isStart = false;
-//        GameUICanvas.SetActive(true);       
-//        onModeChange(_isStart);
-//    }
-
-
-
-//}
