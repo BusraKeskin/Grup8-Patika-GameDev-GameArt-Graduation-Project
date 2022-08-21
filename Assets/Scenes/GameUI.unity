@@ -546,17 +546,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 349433114}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c4330e6fb1b61246857da179edf5f14, type: 3}
+  m_Script: {fileID: 11500000, guid: 66de6f8e22f5c6a4794dbaf6aa7212f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   GameUICanvas: {fileID: 98922816}
   _isStart: 0
   coins: 0
-  heroCount: 0
   currentLevel: 1
   levelText: {fileID: 836101801}
   coinsText: {fileID: 1498697612}
+  MeleeFighterV1PriceText: {fileID: 1241990525}
+  WizardV1PriceText: {fileID: 1194772217}
   HeroesList: []
+  defaultMeleeFighterPrice: 10
+  defaulWizardPrice: 15
+  meleeHitReward: 1
+  spellHitReward: 1
+  nextLevelReward: 15
+  raiseOnBuyMeleeFighter: 2
+  raiseOnBuyWizard: 2
+  raiseOnNextLevelMeleeFighter: 4
+  raiseOnNextLevelWizard: 4
+  successReward: 25
+  failReward: 15
 --- !u!4 &349433116
 Transform:
   m_ObjectHideFlags: 0
@@ -613,6 +625,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5710605819745685211, guid: e5d35ebf29e76cd4f8fa7731c0f0c5b5,
+        type: 3}
+      propertyPath: m_text
+      value: WARRIORS
       objectReference: {fileID: 0}
     - target: {fileID: 5710605819794081298, guid: e5d35ebf29e76cd4f8fa7731c0f0c5b5,
         type: 3}

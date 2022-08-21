@@ -267,6 +267,12 @@ public class Fighter : MonoBehaviour
     public void DealDamage(float damage)
     {
         LockedTarget.GetComponent<Fighter>().CurrentHealth -= damage;
+        if (LockedTarget.tag == "Enemy")//Eğer hasarı alan objenin tag i "Enemy" ise, yani hero hasar verdiyse
+        {
+            GameManager.Instance.coins += GameManager.Instance.meleeHitReward; //Kur Korumalı Mevduattan(Melee hero düşmana hasar verdiğinde) 1 coin kazan
+            PlayerPrefs.SetInt("coins", GameManager.Instance.coins); //artırılmış sonucu hafızaya kaydet
+            GameManager.Instance.coinsText.text = GameManager.Instance.coins.ToString(); // yeni coin değerini ui da yazdır
+        }
         //CoinManager.balance += CoinManager.getCoin * CoinManager.coinMultipler;   
         //Burada hit başına ne kadar coin kazanılacağı hesaplanacak.
         //Belirtilen değişkenler CoinManager içerisinde tanımlanacak.

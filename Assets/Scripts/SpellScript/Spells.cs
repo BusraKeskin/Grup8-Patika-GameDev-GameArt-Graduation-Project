@@ -54,7 +54,15 @@ public class Spells : MonoBehaviour
                 Destroy(effectIns, 1f);
                 Destroy(gameObject);
                 DealSpellDamage(damage);
+
+                if (target.tag == "Enemy")
+                { //Eðer hasarý alan objenin tag i "Enemy" ise, yani hero hasar verdiyse
+                    GameManager.Instance.coins += GameManager.Instance.spellHitReward; //Kur Korumalý Mevduattan(Büyücü hero düþmana hasar verdiðinde) 1 coin kazan
+                    PlayerPrefs.SetInt("coins", GameManager.Instance.coins); //artýrýlmýþ sonucu hafýzaya kaydet
+                    GameManager.Instance.coinsText.text = GameManager.Instance.coins.ToString(); // yeni coin deðerini ui da yazdýr
+                }
             }
         }
+        
     }
 }
